@@ -1,0 +1,51 @@
+body {
+    font-family: Helvetica, sans-serif;
+}
+
+#main-header {
+    text-align: center;
+    min-height: 37px;
+}
+
+#member-select,
+#player-tag {
+    height: 50px;
+    border: 1px solid black;
+    font-size: 18px;
+    margin: 4px;
+    font-weight: 500;
+    min-width: 265px;
+    padding: 0 4px;
+}
+
+#member-select option {
+    text-transform: capitalize;
+}
+
+.navigation {
+    margin-top: 22px;
+    min-height: 50px;
+    text-align: center;
+}
+
+.navigation a {
+    color: #333;
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: bold;
+    background: #e5e5ff;
+    padding: 12px;
+    border-radius: 6px;
+    margin: 4px;
+    text-align: center;
+}
+.over-due {
+    color: red;
+}
+/* On screens that are 992px or less, set the background color to blue */
+@media screen and (max-width: 992px) {
+    .navigation a {
+        float: left;
+        width: calc(100% - 32px);
+    }
+  }
