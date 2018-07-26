@@ -9,7 +9,7 @@ function init() {
             showClanPlayers(result);
         }
     };
-    xhttp.open("GET", "https://api.royaleapi.com/clan/" + "UR2CLCV", true);
+    xhttp.open("GET", "https://api.royaleapi.com/clan/" + "9J09QJ9Q", true);
     xhttp.setRequestHeader("auth", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzE3LCJpZGVuIjoiMjQ3MzU0MTU4MTI5MDg2NDY1IiwibWQiOnt9LCJ0cyI6MTUyODczNzM4NzQ4MH0.6Gv59JsjhBuYtikNA7ONEJDZLhex1qlS9CkaaEsplhA");
     xhttp.send();
 }
