@@ -55,9 +55,13 @@ function handleBattleUI(values, result) {
         $("<td></td>").text(values[i].own).appendTo(tableRow);
         $("<td></td>").text(values[i].opponent).appendTo(tableRow);
         $("<td></td>").text(values[i].difference).appendTo(tableRow);
-        $("<td></td>").text("Win").appendTo(tableRow);
-        $("<td></td>").text("Draw").appendTo(tableRow);
-        $("<td></td>").text("Lose").appendTo(tableRow);
+        if (values[i].winner > 0) {
+            $("<td></td>").text("Win").appendTo(tableRow);
+        } else if (values[i].winner === 0) {
+            $("<td></td>").text("Draw").appendTo(tableRow);
+        } else {
+            $("<td></td>").text("Lose").appendTo(tableRow);
+        }
         tableRow.appendTo("#table-body");
     }
     $("#sub-header").html('Wins: ' + wins + ' ( '+ winPercentage +'%) | ' + 'Draws: ' + draws + ' ( '+ drawPercentage +'%) | ' + 'Loses: ' + loses + ' ( '+ losePercentage +'%)');
