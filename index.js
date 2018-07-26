@@ -40,13 +40,13 @@ function showClanPlayers(result) {
 }
 
 function handleBattleUI(values, result) {
-    var wins = 0;
-    var draws = 0;
-    var loses = 0;
+    var wins = result.games.wins;
+    var draws = result.games.draws;
+    var loses = result.games.losses;
     var total = values.length;
-    var winPercentage = 0;
-    var drawPercentage = 0;
-    var losePercentage = 0;
+    var winPercentage = result.games.winsPercent;
+    var drawPercentage = result.games.drawsPercent;
+    var losePercentage = result.games.lossesPercent;
     $("#header").html(result.name + " - " + result.trophies);
     for (var i = 0; i < values.length; i++) {
         var tableRow = $("<tr></tr>");
@@ -55,21 +55,11 @@ function handleBattleUI(values, result) {
         $("<td></td>").text(values[i].own).appendTo(tableRow);
         $("<td></td>").text(values[i].opponent).appendTo(tableRow);
         $("<td></td>").text(values[i].difference).appendTo(tableRow);
-        if (values[i].winner > 0) {
-            wins++;
-            $("<td></td>").text("Win").appendTo(tableRow);
-        } else if (values[i].winner === 0) {
-            draws++;
-            $("<td></td>").text("Draw").appendTo(tableRow);
-        } else {
-            loses++;
-            $("<td></td>").text("Lose").appendTo(tableRow);
-        }
+        $("<td></td>").text("Win").appendTo(tableRow);
+        $("<td></td>").text("Draw").appendTo(tableRow);
+        $("<td></td>").text("Lose").appendTo(tableRow);
         tableRow.appendTo("#table-body");
     }
-    winPercentage = (wins / total) * 100;
-    drawPercentage = (draws / total) * 100;
-    losePercentage = (loses / total) * 100;
     $("#sub-header").html('Wins: ' + wins + ' ( '+ winPercentage +'%) | ' + 'Draws: ' + draws + ' ( '+ drawPercentage +'%) | ' + 'Loses: ' + loses + ' ( '+ losePercentage +'%)');
     $("#lower-header").html('War day wins: ' + result.games.warDayWins);
 }
