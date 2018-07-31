@@ -64,6 +64,8 @@ function handleBattleUI(values, result) {
         }
         tableRow.appendTo("#table-body");
     }
+    var totalBattles = parseInt(wins) + parseInt(draws) + parseInt(loses);
+    $("#upper-sub-header").html('Total battles: ' + totalBattles);
     $("#sub-header").html('Wins: ' + wins + ' ( '+ winPercentage +'%) | ' + 'Draws: ' + draws + ' ( '+ drawPercentage +'%) | ' + 'Loses: ' + loses + ' ( '+ losePercentage +'%)');
     $("#lower-header").html('War day wins: ' + result.games.warDayWins);
 }
@@ -207,6 +209,7 @@ function getPlayerData(tag) {
     $("#table-body").empty();
     $("#members-table-body").empty();
     $("#header").empty();
+    $("#upper-sub-header").empty();
     $("#sub-header").empty();
     $("#lower-header").empty();
     var xhttp = new XMLHttpRequest();
