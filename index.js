@@ -40,6 +40,12 @@ function showClanPlayers(result) {
 }
 
 function handleBattleUI(values, result) {
+    var currentWins = 0;
+    var currentDraws = 0;
+    var currentLoses = 0;
+    var currentWinPercentage = 0;
+    var currentDrawPercentage = 0;
+    var currentLosePercentage = 0;
     var wins = result.games.wins;
     var draws = result.games.draws;
     var loses = result.games.losses;
@@ -56,17 +62,24 @@ function handleBattleUI(values, result) {
         $("<td></td>").text(values[i].opponent).appendTo(tableRow);
         $("<td></td>").text(values[i].difference).appendTo(tableRow);
         if (values[i].winner > 0) {
+            currentWins++;
             $("<td></td>").text("Win").appendTo(tableRow);
         } else if (values[i].winner === 0) {
+            currentDraws++;
             $("<td></td>").text("Draw").appendTo(tableRow);
         } else {
+            currentLoses++;
             $("<td></td>").text("Lose").appendTo(tableRow);
         }
         tableRow.appendTo("#table-body");
     }
     var totalBattles = parseInt(wins) + parseInt(draws) + parseInt(loses);
+    currentWinPercentage = (currentWins / total) * 100;
+    currentDrawPercentage = (currentDraws / total) * 100;
+    currentLosePercentage = (currentLoses / total) * 100;
     $("#upper-sub-header").html('Total battles: ' + totalBattles);
     $("#sub-header").html('Wins: ' + wins + ' ( '+ winPercentage +'%) | ' + 'Draws: ' + draws + ' ( '+ drawPercentage +'%) | ' + 'Loses: ' + loses + ' ( '+ losePercentage +'%)');
+    $("#sub-header-2").html('Wins: ' + currentWins + ' ( '+ currentWinPercentage +'%) | ' + 'Draws: ' + currentDraws + ' ( '+ currentDrawPercentage +'%) | ' + 'Loses: ' + currentLoses + ' ( '+ currentLosePercentage +'%)');
     $("#lower-header").html('War day wins: ' + result.games.warDayWins);
 }
 
@@ -211,6 +224,7 @@ function getPlayerData(tag) {
     $("#header").empty();
     $("#upper-sub-header").empty();
     $("#sub-header").empty();
+    $("#sub-header-2").empty();
     $("#lower-header").empty();
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
