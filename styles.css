@@ -8,6 +8,7 @@ body {
 }
 
 #member-select,
+#clan-select,
 #player-tag {
     height: 50px;
     border: 1px solid black;
