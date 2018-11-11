@@ -1,4 +1,6 @@
-function init() {
+function selectClan(tag) {
+    $("#last-battles-table-body").empty();
+    $("#members-table-body").empty();
     setTimeout(() => {
         initPlayerInput();
     }, 100);
@@ -9,8 +11,8 @@ function init() {
             showClanPlayers(result);
         }
     };
-    xhttp.open("GET", "https://api.royaleapi.com/clan/" + "9J09QJ9Q", true);
-    xhttp.setRequestHeader("auth", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzE3LCJpZGVuIjoiMjQ3MzU0MTU4MTI5MDg2NDY1IiwibWQiOnt9LCJ0cyI6MTUyODczNzM4NzQ4MH0.6Gv59JsjhBuYtikNA7ONEJDZLhex1qlS9CkaaEsplhA");
+    xhttp.open("GET", "https://api.royaleapi.com/clan/" + tag, true);
+    xhttp.setRequestHeader("auth", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzE3LCJpZGVuIjoiMjQ3MzU0MTU4MTI5MDg2NDY1IiwibWQiOnsidXNlcm5hbWUiOiJTaGVyY2xvY2siLCJrZXlWZXJzaW9uIjozLCJkaXNjcmltaW5hdG9yIjoiODY3NiJ9LCJ0cyI6MTU0MTkxNDUyNzkwMX0.44tlqXTET6GCj1Z5uZs8NIBZHmHTDwZKgBvAGCYCMms");
     xhttp.send();
 }
 
@@ -20,6 +22,7 @@ function initPlayerInput() {
 }
 
 function showClanPlayers(result) {
+    $("#member-select").empty();
     $("#main-header").html(result.name);
     if (location.pathname.includes('lastMatches')) {
         getMembersLastBattle(result.members);
@@ -84,6 +87,7 @@ function handleBattleUI(values, result) {
 }
 
 function handleMemberUI(member) {
+    $("#members-table-body").empty();
     var totalCardLevels = 0;
     var totalMaxCardLevels = 0;
     var totalDiffCardLevels = 0;
@@ -237,7 +241,7 @@ function getPlayerData(tag) {
         }
     };
     xhttp.open("GET", "https://api.royaleapi.com/player/" + tag, true);
-    xhttp.setRequestHeader("auth", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzE3LCJpZGVuIjoiMjQ3MzU0MTU4MTI5MDg2NDY1IiwibWQiOnt9LCJ0cyI6MTUyODczNzM4NzQ4MH0.6Gv59JsjhBuYtikNA7ONEJDZLhex1qlS9CkaaEsplhA");
+    xhttp.setRequestHeader("auth", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzE3LCJpZGVuIjoiMjQ3MzU0MTU4MTI5MDg2NDY1IiwibWQiOnsidXNlcm5hbWUiOiJTaGVyY2xvY2siLCJrZXlWZXJzaW9uIjozLCJkaXNjcmltaW5hdG9yIjoiODY3NiJ9LCJ0cyI6MTU0MTkxNDUyNzkwMX0.44tlqXTET6GCj1Z5uZs8NIBZHmHTDwZKgBvAGCYCMms");
     xhttp.send();
 }
 
@@ -252,16 +256,20 @@ function getPlayerBattleData(member, callback) {
         }
     };
     xhttp.open("GET", "https://api.royaleapi.com/player/" + member.tag + "/battles", true);
-    xhttp.setRequestHeader("auth", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzE3LCJpZGVuIjoiMjQ3MzU0MTU4MTI5MDg2NDY1IiwibWQiOnt9LCJ0cyI6MTUyODczNzM4NzQ4MH0.6Gv59JsjhBuYtikNA7ONEJDZLhex1qlS9CkaaEsplhA");
+    xhttp.setRequestHeader("auth", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzE3LCJpZGVuIjoiMjQ3MzU0MTU4MTI5MDg2NDY1IiwibWQiOnsidXNlcm5hbWUiOiJTaGVyY2xvY2siLCJrZXlWZXJzaW9uIjozLCJkaXNjcmltaW5hdG9yIjoiODY3NiJ9LCJ0cyI6MTU0MTkxNDUyNzkwMX0.44tlqXTET6GCj1Z5uZs8NIBZHmHTDwZKgBvAGCYCMms");
     xhttp.send();
 }
 
 function getMembersLastBattle(members) {
     var i = 0;
-    setInterval(function() {
+    var interval = setInterval(getPlayerBattleDataInterval, 300);
+    function getPlayerBattleDataInterval() {
         i++;
+        if (i === members.length) {
+            clearInterval(interval);
+        }
         getPlayerBattleData(members[i], showLastBattle);
-    }, 300);
+    }
 }
 
 function handleTournamentResult(tournaments) {
@@ -288,7 +296,7 @@ function getOpenTournaments() {
         }
     };
     xhttp.open("GET", "https://api.royaleapi.com/tournaments/open", true);
-    xhttp.setRequestHeader("auth", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzE3LCJpZGVuIjoiMjQ3MzU0MTU4MTI5MDg2NDY1IiwibWQiOnt9LCJ0cyI6MTUyODczNzM4NzQ4MH0.6Gv59JsjhBuYtikNA7ONEJDZLhex1qlS9CkaaEsplhA");
+    xhttp.setRequestHeader("auth", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzE3LCJpZGVuIjoiMjQ3MzU0MTU4MTI5MDg2NDY1IiwibWQiOnsidXNlcm5hbWUiOiJTaGVyY2xvY2siLCJrZXlWZXJzaW9uIjozLCJkaXNjcmltaW5hdG9yIjoiODY3NiJ9LCJ0cyI6MTU0MTkxNDUyNzkwMX0.44tlqXTET6GCj1Z5uZs8NIBZHmHTDwZKgBvAGCYCMms");
     xhttp.send();    
 }
 
@@ -301,7 +309,7 @@ function getTournamentDetails(tournament) {
         }
     };
     xhttp.open("GET", "https://api.royaleapi.com/tournament/" + tournament.tag, true);
-    xhttp.setRequestHeader("auth", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzE3LCJpZGVuIjoiMjQ3MzU0MTU4MTI5MDg2NDY1IiwibWQiOnt9LCJ0cyI6MTUyODczNzM4NzQ4MH0.6Gv59JsjhBuYtikNA7ONEJDZLhex1qlS9CkaaEsplhA");
+    xhttp.setRequestHeader("auth", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzE3LCJpZGVuIjoiMjQ3MzU0MTU4MTI5MDg2NDY1IiwibWQiOnsidXNlcm5hbWUiOiJTaGVyY2xvY2siLCJrZXlWZXJzaW9uIjozLCJkaXNjcmltaW5hdG9yIjoiODY3NiJ9LCJ0cyI6MTU0MTkxNDUyNzkwMX0.44tlqXTET6GCj1Z5uZs8NIBZHmHTDwZKgBvAGCYCMms");
     xhttp.send();    
 }
 
@@ -324,5 +332,3 @@ function showLastBattle(member, result) {
     tableRow.appendTo("#last-battles-table-body");
     sortTable("last-battles-table-body");
 }
-
-init();
